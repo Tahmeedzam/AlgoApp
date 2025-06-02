@@ -6,8 +6,15 @@ class bigCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(height: 200, color: Color(0xff1A1A1A)),
+      padding: const EdgeInsets.only(top: 8, right: 8),
+      child: Container(
+        height: 200,
+        width: 250,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(8),
+          color: Color(0xff1A1A1A),
+        ),
+      ),
     );
   }
 }
