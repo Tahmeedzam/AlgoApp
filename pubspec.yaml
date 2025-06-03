@@ -35,7 +35,9 @@ dependencies:
   firebase_storage: ^12.4.6
   flutter:
     sdk: flutter
+  flutter_native_splash: ^2.4.6
   flutter_svg: ^2.1.0
+  font_awesome_flutter: ^10.8.0
   google_nav_bar: ^5.0.7
   lottie: ^3.3.1
 
@@ -56,6 +58,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/json/
+    - assets/images/
     - assets/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
@@ -80,3 +83,15 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+
+flutter_native_splash:
+  android: true
+  ios: true
+  color: "#363636" # same dark gray as your background
+  image: assets/images/algorithm_logo.png # Replace with your logo path
+  branding: assets/images/branding.png # Optional: small branding logo
+  android_12:
+    color: "#363636"
+    image: assets/images/algorithm_logo.png
+    branding: assets/images/branding.png
+  web: false # If you're not targeting web

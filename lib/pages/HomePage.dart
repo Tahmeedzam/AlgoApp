@@ -13,16 +13,42 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            'Algo-Verse',
+            style: TextStyle(
+              fontSize: 18,
+              color: Color(0xffE0E0E0),
+              letterSpacing: 4,
+            ),
+          ),
+        ),
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+      ),
       backgroundColor: const Color(0xff0D0D0D),
       body: SafeArea(
         child: Column(
           children: [
-            // ✅ Main content inside Padding
+            // Filter based cards
             Padding(
-              padding: const EdgeInsets.only(top: 40, left: 30, right: 30),
+              padding: const EdgeInsets.only(top: 10, left: 30, right: 30),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: 200,
+                    child: ListView(
+                      scrollDirection: Axis.horizontal,
+                      children: [
+                        bigCard(),
+                        const SizedBox(width: 8),
+                        bigCard(),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 30),
                   // 🔍 Search bar and filter icon
                   Row(
                     children: [
@@ -67,21 +93,9 @@ class _HomePageState extends State<HomePage> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 40),
 
                   // 🟨 Horizontal big cards
-                  SizedBox(
-                    height: 200,
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        bigCard(),
-                        const SizedBox(width: 8),
-                        bigCard(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 40),
+                  const SizedBox(height: 30),
 
                   // 🟨 Recommended title
                   const Text(
