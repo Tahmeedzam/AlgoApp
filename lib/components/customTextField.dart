@@ -12,7 +12,7 @@ class CustomTextField extends StatelessWidget {
         decoration: InputDecoration(
           label: Text(
             '$text',
-            style: const TextStyle(color: Color(0xffE0E0E0)),
+            style: const TextStyle(color: Color(0xffE0E0E0), fontSize: 16),
           ),
           enabledBorder: UnderlineInputBorder(
             borderSide: BorderSide(
@@ -22,7 +22,7 @@ class CustomTextField extends StatelessWidget {
           ),
           focusedBorder: UnderlineInputBorder(
             borderSide: BorderSide(
-              color: Colors.amber, // yellow when focused
+              color: Color(0xffFFD300), // yellow when focused
               width: 2,
             ),
           ),
