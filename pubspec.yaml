@@ -83,15 +83,14 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-
-flutter_native_splash:
-  android: true
-  ios: true
-  color: "#363636" # same dark gray as your background
-  image: assets/images/algorithm_logo.png # Replace with your logo path
-  branding: assets/images/branding.png # Optional: small branding logo
-  android_12:
-    color: "#363636"
-    image: assets/images/algorithm_logo.png
-    branding: assets/images/branding.png
-  web: false # If you're not targeting web
+# flutter_native_splash:
+#   android: true
+#   ios: true
+#   color: "#363636" # same dark gray as your background
+#   image: assets/images/algorithm_logo.png # Replace with your logo path
+#   branding: assets/images/branding.png # Optional: small branding logo
+#   android_12:
+#     color: "#363636"
+#     image: assets/images/algorithm_logo.png
+#     branding: assets/images/branding.png
+#   web: false # If you're not targeting web

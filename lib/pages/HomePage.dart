@@ -16,7 +16,7 @@ class _HomePageState extends State<HomePage> {
       appBar: AppBar(
         title: Center(
           child: Text(
-            'Algo-Verse for life',
+            'Algo-Verse',
             style: TextStyle(
               fontSize: 18,
               color: Color(0xffE0E0E0),
