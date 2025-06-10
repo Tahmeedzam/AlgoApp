@@ -67,8 +67,11 @@ class AddAlgoPage2 extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: Color(0xff1A1A1A),
-                        border: Border.all(color: Color(0xff606060), width: 1),
-                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(
+                          color: Color(0xff606060),
+                          width: 1.25,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: Row(
                         mainAxisSize: MainAxisSize.min,
@@ -97,8 +100,11 @@ class AddAlgoPage2 extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: Color(0xff1A1A1A),
-                        border: Border.all(color: Color(0xFF606060), width: 1),
-                        borderRadius: BorderRadius.circular(18),
+                        border: Border.all(
+                          color: Color(0xFF606060),
+                          width: 1.25,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
                       ),
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
