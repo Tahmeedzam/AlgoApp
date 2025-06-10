@@ -5,15 +5,20 @@ import 'package:algosapp/pages/ProfilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
-class BottomNav extends StatefulWidget {
+class AdminBottomNav extends StatefulWidget {
   @override
-  State<BottomNav> createState() => _BottomNavState();
+  State<AdminBottomNav> createState() => _AdminBottomNavState();
 }
 
-class _BottomNavState extends State<BottomNav> {
+class _AdminBottomNavState extends State<AdminBottomNav> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [HomePage(), AIChatPage(), ProfilePage()];
+  final List<Widget> _pages = [
+    HomePage(),
+    AIChatPage(),
+    AddAlgoPage(),
+    ProfilePage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +43,7 @@ class _BottomNavState extends State<BottomNav> {
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
               GButton(icon: Icons.chat, text: 'AI'),
+              GButton(icon: Icons.add_circle_outline_rounded, text: 'Add'),
               GButton(icon: Icons.person, text: 'Profile'),
             ],
           ),

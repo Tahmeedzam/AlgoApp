@@ -1,4 +1,5 @@
 import 'package:algosapp/components/splashScreen.dart';
+import 'package:algosapp/navigators/AdminBottomNav.dart';
 import 'package:algosapp/navigators/BottomNav.dart';
 import 'package:algosapp/pages/HomePage.dart';
 import 'package:algosapp/theme/theme.dart';
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
       theme: lightMode,
       darkTheme: darkMode,
       themeMode: ThemeMode.dark,
-      home: SplashScreen(),
+      home: AdminBottomNav(),
     );
   }
 }
