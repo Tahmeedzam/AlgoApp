@@ -2,6 +2,8 @@ import 'package:algosapp/components/splashScreen.dart';
 import 'package:algosapp/navigators/AdminBottomNav.dart';
 import 'package:algosapp/navigators/BottomNav.dart';
 import 'package:algosapp/pages/HomePage.dart';
+import 'package:algosapp/pages/admin/AddAlgoPage.dart';
+import 'package:algosapp/pages/admin/AddAlgoPage2.dart';
 import 'package:algosapp/theme/theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -25,7 +27,7 @@ class MyApp extends StatelessWidget {
       theme: lightMode,
       darkTheme: darkMode,
       themeMode: ThemeMode.dark,
-      home: AdminBottomNav(),
+      home: AddAlgoPage2(),
     );
   }
 }
