@@ -19,7 +19,7 @@ class AddAlgoPage2 extends StatelessWidget {
             color: Color(0xFFFFD300),
             shape: BoxShape.circle,
           ),
-          child: const Icon(Icons.add, color: Colors.black, size: 30),
+          child: const Icon(Icons.add, color: Color(0xFF0D0D0D), size: 50),
         ),
       ),
     );
@@ -62,17 +62,27 @@ class AddAlgoPage2 extends StatelessWidget {
                     onTap: () {},
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 24,
-                        vertical: 12,
+                        horizontal: 20,
+                        vertical: 10,
                       ),
                       decoration: BoxDecoration(
-                        color: Color(0xff0D0D0D),
-                        border: Border.all(color: Color(0xffE0E0E0), width: 1),
-                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xff1A1A1A),
+                        border: Border.all(color: Color(0xff606060), width: 1),
+                        borderRadius: BorderRadius.circular(18),
                       ),
-                      child: const Text(
-                        'Back',
-                        style: TextStyle(color: Color(0xffE0E0E0)),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.arrow_back_ios_rounded,
+                            color: Color(0xff0D0D0D),
+                          ),
+                          SizedBox(width: 8),
+                          Text(
+                            'Back',
+                            style: TextStyle(color: Color(0xffE0E0E0)),
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -82,20 +92,26 @@ class AddAlgoPage2 extends StatelessWidget {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 18,
+                        horizontal: 20,
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: Colors.black,
-                        border: Border.all(color: Color(0xFFFFD300), width: 1),
-                        borderRadius: BorderRadius.circular(15),
+                        color: Color(0xff1A1A1A),
+                        border: Border.all(color: Color(0xFF606060), width: 1),
+                        borderRadius: BorderRadius.circular(18),
                       ),
                       child: const Row(
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text('Next', style: TextStyle(color: Colors.white)),
+                          Text(
+                            'Next',
+                            style: TextStyle(color: Color(0xFfE0E0E0)),
+                          ),
                           SizedBox(width: 8),
-                          Icon(Icons.arrow_forward, color: Color(0xFFFFD300)),
+                          Icon(
+                            Icons.arrow_forward_ios_rounded,
+                            color: Color(0xFFFFD300),
+                          ),
                         ],
                       ),
                     ),
