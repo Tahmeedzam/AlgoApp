@@ -27,8 +27,8 @@ class MyApp extends StatelessWidget {
       theme: lightMode,
       darkTheme: darkMode,
       themeMode: ThemeMode.dark,
-      // home: AdminBottomNav(),
-      home: AddAlgoPage2(),
+      home: AdminBottomNav(),
+      // home: AddAlgoPage2(),
     );
   }
 }
