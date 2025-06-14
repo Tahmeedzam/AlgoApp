@@ -200,10 +200,10 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
                 // ─── save to Firestore under user‑defined doc ID ────
                 try {
                   // todo: Uncomment this while inputting values to database
-                  // await FirebaseFirestore.instance
-                  //     .collection('algorithms')
-                  //     .doc(_idCtrl.text.trim()) // use the typed ID
-                  //     .set(algoData);
+                  await FirebaseFirestore.instance
+                      .collection('algorithms')
+                      .doc(_idCtrl.text.trim()) // use the typed ID
+                      .set(algoData);
 
                   // closing Loading screen
                   if (context.mounted) Navigator.pop(context); // pop loader

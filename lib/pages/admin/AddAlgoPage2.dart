@@ -1,10 +1,14 @@
 import 'dart:io';
-
+import 'package:algosapp/components/loadingCircle.dart';
+import 'package:algosapp/services/cloudinaryService.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloudinary_public/cloudinary_public.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class AddAlgoPage2 extends StatefulWidget {
-  const AddAlgoPage2({super.key, required this.id});
+  AddAlgoPage2({super.key, required this.id});
   final String id;
 
   @override
@@ -14,7 +18,6 @@ class AddAlgoPage2 extends StatefulWidget {
 class _AddAlgoPage2State extends State<AddAlgoPage2> {
   File? _mainImageFile;
   final List<File> _slideshowImages = [];
-  String? _imageUrl;
 
   @override
   void initState() {
@@ -50,7 +53,12 @@ class _AddAlgoPage2State extends State<AddAlgoPage2> {
 
   Future<File?> _pickImage(ImageSource source) async {
     final ImagePicker picker = ImagePicker();
-    final XFile? pickedFile = await picker.pickImage(source: source);
+    final XFile? pickedFile = await picker.pickImage(
+      source: source,
+      maxWidth: 1000, // down‑scale
+      maxHeight: 1000,
+      imageQuality: 20,
+    );
     return pickedFile == null ? null : File(pickedFile.path);
   }
 
@@ -68,6 +76,44 @@ class _AddAlgoPage2State extends State<AddAlgoPage2> {
       setState(() => _mainImageFile = file);
     }
     print(file.toString().trim());
+  }
+
+  Future<void> _uploadAllImages() async {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // user can’t close it
+      builder: (_) => LoadingCircle(),
+    );
+    //Main Image
+    final imageUrl = await uploadToCloudinary(_mainImageFile);
+    String id = widget.id;
+
+    if (imageUrl != null) {
+      print("Image uploaded at: $imageUrl");
+      //uploading to Firebase
+      await FirebaseFirestore.instance.collection('algorithms').doc(id).update({
+        'mainImage': imageUrl,
+      });
+    } else {
+      print("Image upload failed.");
+    }
+
+    //Slideshow Images
+    final List<String?> _slideshowImagesUrl = [];
+    for (var _img in _slideshowImages) {
+      String? _imgUrl = await uploadToCloudinary(_img);
+      _slideshowImagesUrl.add(_imgUrl);
+    }
+    if (context.mounted) Navigator.pop(context);
+    if (_slideshowImagesUrl != null) {
+      print("Image uploaded at: $_slideshowImagesUrl");
+      await FirebaseFirestore.instance.collection('algorithms').doc(id).update({
+        'slideshowImage': _slideshowImagesUrl,
+      });
+      // You can now save this URL to Firestore or your DB
+    } else {
+      print("Image upload failed.");
+    }
   }
 
   @override
@@ -171,7 +217,7 @@ class _AddAlgoPage2State extends State<AddAlgoPage2> {
             ),
             GestureDetector(
               onTap: () {
-                // Next button logic
+                _uploadAllImages();
               },
               child: Container(
                 padding: const EdgeInsets.symmetric(

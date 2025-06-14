@@ -5,12 +5,16 @@ import 'package:algosapp/pages/HomePage.dart';
 import 'package:algosapp/pages/admin/AddAlgoPage.dart';
 import 'package:algosapp/pages/admin/AddAlgoPage2.dart';
 import 'package:algosapp/pages/shimmerPages/AddAlgoShimmer.dart';
+import 'package:algosapp/services/cloudinaryService.dart';
 import 'package:algosapp/theme/theme.dart';
+import 'package:dotenv/dotenv.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await Firebase.initializeApp();
 
   runApp(const MyApp());
