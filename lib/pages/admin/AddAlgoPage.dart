@@ -3,6 +3,7 @@ import 'package:algosapp/components/customSnackBar.dart';
 import 'package:algosapp/components/customTextField.dart';
 import 'package:algosapp/components/label.dart';
 import 'package:algosapp/components/loadingCircle.dart';
+import 'package:algosapp/pages/admin/AddAlgoPage2.dart';
 import 'package:algosapp/pages/shimmerPages/AddAlgoShimmer.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -65,6 +66,27 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
     }
   }
 
+  Map<String, Object?> readyData() {
+    final categories = [
+      _cat1,
+      _cat2,
+    ].where((c) => c != null && c!.isNotEmpty).cast<String>().toList();
+
+    // change Number field from text to Number
+    final String raw = _numberCtrl.text.trim();
+    final int? number = int.tryParse(raw);
+
+    Map<String, Object?> algoData;
+
+    return algoData = {
+      'id': _idCtrl.text.trim(),
+      'number': number,
+      'name': _nameCtrl.text.trim(),
+      'description': _descCtrl.text.trim(),
+      if (categories.isNotEmpty) 'category': categories,
+    };
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,7 +95,7 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
         backgroundColor: const Color(0xff1A1A1A),
         title: const Text(
           'Add New Algo',
-          style: TextStyle(color: Color(0xffE0E0E0), fontSize: 16),
+          style: TextStyle(color: Color(0xffE0E0E0), fontSize: 18),
         ),
       ),
       body: _loading ? const AddAlgoShimmer() : _formBody(),
@@ -89,7 +111,7 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
             const Center(
               child: Text(
                 'Details:',
-                style: TextStyle(color: Color(0xffE0E0E0), fontSize: 16),
+                style: TextStyle(color: Color(0xffE0E0E0), fontSize: 20),
               ),
             ),
             //TextFields
@@ -165,22 +187,7 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
             GestureDetector(
               onTap: () async {
                 // Check if cat2 is empty or not
-                final categories = [_cat1, _cat2]
-                    .where((c) => c != null && c!.isNotEmpty)
-                    .cast<String>()
-                    .toList();
-
-                // change Number field from text to Number
-                final String raw = _numberCtrl.text.trim();
-                final int? number = int.tryParse(raw);
-
-                final algoData = {
-                  'id': _idCtrl.text.trim(),
-                  'number': number,
-                  'name': _nameCtrl.text.trim(),
-                  'description': _descCtrl.text.trim(),
-                  if (categories.isNotEmpty) 'category': categories,
-                };
+                final algoData = readyData();
                 debugPrint('Ready to upload ➜ $algoData');
 
                 //Show Loading screen
@@ -228,6 +235,8 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
                       ),
                     );
                   }
+
+                  nextPage();
                 } catch (e) {
                   debugPrint('Error saving data: $e');
 
@@ -294,6 +303,36 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  nextPage() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => AddAlgoPage2(
+          id: _idCtrl.text.trim(), // Pass your data here
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          // Fade + Slide from right
+          final offsetAnimation =
+              Tween<Offset>(
+                begin: Offset(1.0, 0.0), // slide from right
+                end: Offset.zero,
+              ).animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+              );
+
+          final fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          );
+
+          return SlideTransition(
+            position: offsetAnimation,
+            child: FadeTransition(opacity: fadeAnimation, child: child),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 400),
       ),
     );
   }

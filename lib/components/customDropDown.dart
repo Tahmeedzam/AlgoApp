@@ -16,7 +16,7 @@ Widget myCustomDropDown({
       closedFillColor: Color(0xff1A1A1A),
       expandedFillColor: Color(0xff1A1A1A),
       headerStyle: TextStyle(color: Color(0xffE0E0E0)),
-      listItemStyle: TextStyle(color: Color(0xffE0E0E0)),
+      listItemStyle: TextStyle(color: Color(0xffE0E0E0), fontSize: 16),
     ),
     onChanged: onChanged,
   ),
