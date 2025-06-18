@@ -18,6 +18,7 @@ class AddAlgoPage extends StatefulWidget {
 
 class _AddAlgoPageState extends State<AddAlgoPage> {
   List<String> _categories = ['Select Category'];
+  List<String> _catIds = [''];
   bool _loading = true;
   final _idCtrl = TextEditingController();
   final _numberCtrl = TextEditingController();
@@ -25,6 +26,8 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
   final _descCtrl = TextEditingController();
   String? _cat1;
   String? _cat2;
+  String? _cat1Id;
+  String? _cat2Id;
 
   @override
   void dispose() {
@@ -49,14 +52,21 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
           .orderBy('name')
           .get();
 
-      final names = snap.docs
-          .map((d) => (d.data()['name'] ?? '').toString())
-          .where((n) => n.isNotEmpty)
-          .toList();
+      final names = <String>[];
+      final ids = <String>[];
+
+      for (var d in snap.docs) {
+        final name = (d.data()['name'] ?? '').toString();
+        if (name.isNotEmpty) {
+          names.add(name);
+          ids.add(d.id); // ← capture doc ID
+        }
+      }
 
       if (mounted) {
         setState(() {
-          _categories = [...names];
+          _categories = names;
+          _catIds = ids;
           _loading = false;
         });
       }
@@ -82,7 +92,7 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
       'id': _idCtrl.text.trim(),
       'number': number,
       'name': _nameCtrl.text.trim(),
-      'description': _descCtrl.text.trim(),
+      'description': _descCtrl.text,
       if (categories.isNotEmpty) 'category': categories,
     };
   }
@@ -125,8 +135,14 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
             customlabel('Category 1: *'),
             myCustomDropDown(
               value: _cat1,
-              onChanged: (v) => setState(() => _cat1 = v),
-              categories: _categories,
+              categories: _categories, // UI list
+              onChanged: (v) {
+                setState(() => _cat1 = v);
+                final index = _categories.indexOf(v ?? '');
+                final pickedId = index >= 0 ? _catIds[index] : null;
+                debugPrint('User picked ‑ $v (id: $pickedId)');
+                _cat1Id = pickedId; // store it for later
+              },
             ),
 
             const SizedBox(height: 15),
@@ -134,8 +150,14 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
             customlabel('Category 2:'),
             myCustomDropDown(
               value: _cat2,
-              onChanged: (v) => setState(() => _cat2 = v),
-              categories: _categories,
+              categories: _categories, // UI list
+              onChanged: (v) {
+                setState(() => _cat2 = v);
+                final index = _categories.indexOf(v ?? '');
+                final pickedId = index >= 0 ? _catIds[index] : null;
+                debugPrint('User picked ‑ $v (id: $pickedId)');
+                _cat2Id = pickedId; // store it for later
+              },
             ),
 
             const SizedBox(height: 15),
@@ -204,6 +226,26 @@ class _AddAlgoPageState extends State<AddAlgoPage> {
                       .collection('algorithms')
                       .doc(_idCtrl.text.trim()) // use the typed ID
                       .set(algoData);
+
+                  await FirebaseFirestore.instance
+                      .collection('categories')
+                      .doc('${_cat1Id}')
+                      .update({
+                        'algoIncluded': FieldValue.arrayUnion([
+                          _idCtrl.text.trim(),
+                        ]),
+                      });
+
+                  if (_cat2Id != null) {
+                    await FirebaseFirestore.instance
+                        .collection('categories')
+                        .doc('${_cat2Id}')
+                        .update({
+                          'algoIncluded': FieldValue.arrayUnion([
+                            _idCtrl.text.trim(),
+                          ]),
+                        });
+                  }
 
                   // closing Loading screen
                   if (context.mounted) Navigator.pop(context); // pop loader

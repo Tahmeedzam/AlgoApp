@@ -40,6 +40,7 @@ class _HomePageState extends State<HomePage> {
                   SizedBox(
                     height: 200,
                     child: ListView(
+                      physics: BouncingScrollPhysics(),
                       scrollDirection: Axis.horizontal,
                       children: [
                         bigCard(),
@@ -110,6 +111,7 @@ class _HomePageState extends State<HomePage> {
             // ✅ Expanded vertical list outside padding
             Expanded(
               child: ListView(
+                physics: BouncingScrollPhysics(),
                 padding: const EdgeInsets.symmetric(horizontal: 30),
                 children: [
                   smallCard(),

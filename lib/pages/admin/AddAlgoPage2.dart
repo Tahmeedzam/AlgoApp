@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:algosapp/components/loadingCircle.dart';
+import 'package:algosapp/pages/admin/AddAlgoPage3.dart';
 import 'package:algosapp/services/cloudinaryService.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:cloudinary_public/cloudinary_public.dart';
@@ -78,6 +79,36 @@ class _AddAlgoPage2State extends State<AddAlgoPage2> {
     print(file.toString().trim());
   }
 
+  nextPage() {
+    Navigator.of(context).push(
+      PageRouteBuilder(
+        pageBuilder: (context, animation, secondaryAnimation) => AddAlgoPage3(
+          id: widget.id.trim(), // Pass your data here
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          // Fade + Slide from right
+          final offsetAnimation =
+              Tween<Offset>(
+                begin: Offset(1.0, 0.0), // slide from right
+                end: Offset.zero,
+              ).animate(
+                CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+              );
+
+          final fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(
+            CurvedAnimation(parent: animation, curve: Curves.easeInOut),
+          );
+
+          return SlideTransition(
+            position: offsetAnimation,
+            child: FadeTransition(opacity: fadeAnimation, child: child),
+          );
+        },
+        transitionDuration: Duration(milliseconds: 400),
+      ),
+    );
+  }
+
   Future<void> _uploadAllImages() async {
     showDialog(
       context: context,
@@ -104,12 +135,13 @@ class _AddAlgoPage2State extends State<AddAlgoPage2> {
       String? _imgUrl = await uploadToCloudinary(_img);
       _slideshowImagesUrl.add(_imgUrl);
     }
-    if (context.mounted) Navigator.pop(context);
     if (_slideshowImagesUrl != null) {
       print("Image uploaded at: $_slideshowImagesUrl");
       await FirebaseFirestore.instance.collection('algorithms').doc(id).update({
         'slideshowImage': _slideshowImagesUrl,
       });
+      if (context.mounted) Navigator.pop(context);
+      nextPage();
       // You can now save this URL to Firestore or your DB
     } else {
       print("Image upload failed.");
