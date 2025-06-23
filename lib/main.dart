@@ -4,6 +4,7 @@ import 'package:algosapp/navigators/BottomNav.dart';
 import 'package:algosapp/pages/HomePage.dart';
 import 'package:algosapp/pages/admin/AddAlgoPage.dart';
 import 'package:algosapp/pages/admin/AddAlgoPage2.dart';
+import 'package:algosapp/pages/algoViewPage.dart';
 import 'package:algosapp/pages/shimmerPages/AddAlgoShimmer.dart';
 import 'package:algosapp/services/cloudinaryService.dart';
 import 'package:algosapp/theme/theme.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
       // ),
       home: AdminBottomNav(),
       // home: AddAlgoShimmer(),
-      // home: AddAlgoPage2(),
+      // home: AlgoViewPage(id: 'bubble_sort'),
     );
   }
 }

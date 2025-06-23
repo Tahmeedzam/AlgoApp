@@ -16,6 +16,7 @@ class _HomePageState extends State<HomePage> {
   final Map<String, Color> _colorByName = {}; // name → Color
   final Map<String, String> _catNames = {}; // id   → name
   bool _catsLoaded = false;
+  late String id;
 
   /* ─── search state ────────────────────────────────────────────── */
   final TextEditingController _searchCtrl = TextEditingController(); // ★
@@ -199,10 +200,13 @@ class _HomePageState extends State<HomePage> {
 
                             final subTitle = catNames.join(', ');
 
+                            // passing id to smallCard
+                            id = data['id'];
                             return smallCard(
                               Cardcolor: cardColor,
                               CardName: data['name'] ?? 'Untitled',
                               CardCategoryName: subTitle,
+                              CardId: id,
                             );
                           },
                         );

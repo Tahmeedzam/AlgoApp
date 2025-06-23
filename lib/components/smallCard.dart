@@ -1,14 +1,18 @@
+import 'package:algosapp/pages/algoViewPage.dart';
 import 'package:flutter/material.dart';
 
 class smallCard extends StatefulWidget {
   final Color Cardcolor;
   final String CardName;
   final String CardCategoryName;
+  final String CardId;
+
   const smallCard({
     super.key,
     required this.Cardcolor,
     required this.CardName,
     required this.CardCategoryName,
+    required this.CardId,
   });
 
   @override
@@ -74,7 +78,52 @@ class _smallCardState extends State<smallCard> {
                     child: Icon(Icons.bookmark_outline, size: 20),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(
+                        PageRouteBuilder(
+                          pageBuilder:
+                              (context, animation, secondaryAnimation) =>
+                                  AlgoViewPage(id: widget.CardId),
+                          transitionsBuilder:
+                              (context, animation, secondaryAnimation, child) {
+                                // Fade + Slide from right
+                                final offsetAnimation =
+                                    Tween<Offset>(
+                                      begin: Offset(
+                                        1.0,
+                                        0.0,
+                                      ), // slide from right
+                                      end: Offset.zero,
+                                    ).animate(
+                                      CurvedAnimation(
+                                        parent: animation,
+                                        curve: Curves.easeInOut,
+                                      ),
+                                    );
+
+                                final fadeAnimation =
+                                    Tween<double>(begin: 0.0, end: 1.0).animate(
+                                      CurvedAnimation(
+                                        parent: animation,
+                                        curve: Curves.easeInOut,
+                                      ),
+                                    );
+
+                                return SlideTransition(
+                                  position: offsetAnimation,
+                                  child: FadeTransition(
+                                    opacity: fadeAnimation,
+                                    child: child,
+                                  ),
+                                );
+                              },
+                          transitionDuration: Duration(
+                            milliseconds: 400,
+                          ), // Pass your data here
+                        ),
+                      );
+                      print(widget.CardId);
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         color: Color(0xff0D0D0D),
