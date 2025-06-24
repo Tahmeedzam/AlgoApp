@@ -1,5 +1,7 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AlgoViewPage extends StatefulWidget {
   final String id;
@@ -42,16 +44,20 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
           // 2️⃣ trigger rebuild
           algoName = data['name'] as String?;
           algoDescription = data['description'] as String?;
+          algoMainImage = data['mainImage'] as String?;
+          algoSlideshowImage = List<String>.from(data['slideshowImage'] ?? []);
+          algoJavaCode = data['java'] as String?;
+          algoCppCode = data['cpp'] as String?;
+          algoPythonCode = data['python'] as String?;
           dataFetched = true;
         });
-        print(algoDescription);
+        print(algoSlideshowImage);
       }
     } catch (e, st) {
       debugPrint('fetchData() failed: $e\n$st'); // 4️⃣ error handling
     }
   }
 
-  int _currentPage = 0;
   @override
   Widget build(BuildContext context) {
     return dataFetched == (false)
@@ -60,82 +66,79 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
             child: Center(child: CircularProgressIndicator()),
           )
         : SafeArea(
-            child: Scaffold(
-              appBar: AppBar(
-                backgroundColor: Color(0xFF1A1A1A),
-                title: Text(algoName!),
-                centerTitle: true,
-                leading: IconButton(
-                  icon: Icon(Icons.keyboard_arrow_left_rounded),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+            child: DefaultTabController(
+              length: 3,
+              child: Scaffold(
+                appBar: AppBar(
+                  backgroundColor: Color(0xFF1A1A1A),
+                  title: Text(
+                    algoName!,
+                    style: TextStyle(color: Color(0xffE0E0E0)),
+                  ),
+                  centerTitle: true,
+                  leading: IconButton(
+                    icon: Icon(Icons.keyboard_arrow_left_rounded),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
                 ),
-              ),
-              backgroundColor: const Color(0xff0D0D0D),
-              body: SafeArea(
-                child: Column(
+                backgroundColor: const Color(0xff0D0D0D),
+                body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // const SizedBox(height: 20),
-                    // const SizedBox(height: 20),
+                    TabBar(
+                      indicatorColor: Color(0xffFFD300),
+                      tabs: [
+                        Tab(
+                          child: Text(
+                            'Explaination',
+                            style: TextStyle(
+                              color: Color(0xff7D7D7D),
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            'Visualization',
+                            style: TextStyle(
+                              color: Color(0xff7D7D7D),
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                        Tab(
+                          child: Text(
+                            'Code',
+                            style: TextStyle(
+                              color: Color(0xff7D7D7D),
+                              fontFamily: 'Poppins',
+                              fontSize: 16,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
                     Expanded(
-                      child: PageView(
+                      child: TabBarView(
                         physics: BouncingScrollPhysics(),
-                        // controller: _pageCtrl,
-                        onPageChanged: (index) {
-                          setState(() {
-                            _currentPage = index;
-                          });
-                        },
                         children: [
                           descPage(algoDescription: algoDescription),
-                          descPage(algoDescription: algoDescription),
-                          descPage(algoDescription: algoDescription),
+                          Visualizationpage(
+                            algoSlideshowImage: algoSlideshowImage,
+                          ),
+                          Container(child: Center(child: Text("Page"))),
+                          // Container(child: Center(child: Text("Page"))),
                         ],
                       ),
                     ),
                   ],
                 ),
               ),
-
-              // ─── Create Button ───────────────────────────────
-              // bottomNavigationBar: _currentPage == 2
-              //     ? Padding(
-              //         padding: const EdgeInsets.symmetric(
-              //           horizontal: 20,
-              //           vertical: 16,
-              //         ),
-              //         child: ElevatedButton(
-              //           style: ElevatedButton.styleFrom(
-              //             backgroundColor: const Color(0xFFFFD300),
-              //             foregroundColor: const Color(0xff0D0D0D),
-              //             minimumSize: const Size.fromHeight(50),
-              //             shape: RoundedRectangleBorder(
-              //               borderRadius: BorderRadius.circular(12),
-              //             ),
-              //           ),
-              //           // onPressed: _handleCreate,
-              //           onPressed: () {},
-              //           child: const Text('Create', style: TextStyle(fontSize: 16)),
-              //         ),
-              //       )
-              //     : Padding(
-              //         padding: const EdgeInsets.only(bottom: 40),
-              //         child: Row(
-              //           mainAxisAlignment: MainAxisAlignment.center,
-              //           children: [
-              //             Text(
-              //               "Swipe",
-              //               style: TextStyle(fontSize: 14, color: Color(0xffE0E0E0)),
-              //             ),
-              //             Icon(
-              //               Icons.arrow_right_alt_rounded,
-              //               color: Color(0xffE0E0E0),
-              //             ),
-              //           ],
-              //         ),
-              //       ),
             ),
           );
   }
@@ -153,20 +156,6 @@ class descPage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        // ── Tabs ───────────────────────────────────────────────
-        const SizedBox(height: 2),
-        Container(
-          color: const Color(0xFF1A1A1A),
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: const Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _Tab(text: 'Explanation', active: true),
-              _Tab(text: 'Visualization'),
-              _Tab(text: 'Code'),
-            ],
-          ),
-        ),
         const SizedBox(height: 20),
 
         // ── Card ───────────────────────────────────────────────
@@ -201,7 +190,7 @@ class descPage extends StatelessWidget {
                     thumbVisibility: true,
                     child: SingleChildScrollView(
                       controller: scrollCtrl,
-                      padding: const EdgeInsets.fromLTRB(15, 10, 10, 16),
+                      padding: const EdgeInsets.fromLTRB(15, 10, 10, 0),
                       physics: const BouncingScrollPhysics(),
                       child: Text(
                         algoDescription ?? '',
@@ -222,20 +211,95 @@ class descPage extends StatelessWidget {
   }
 }
 
-/// Simple tab label widget (optional)
-class _Tab extends StatelessWidget {
-  final String text;
-  final bool active;
-  const _Tab({required this.text, this.active = false});
+class Visualizationpage extends StatefulWidget {
+  final List<String>? algoSlideshowImage;
+  const Visualizationpage({Key? key, required this.algoSlideshowImage})
+    : super(key: key);
+
+  @override
+  State<Visualizationpage> createState() => _VisualizationpageState();
+}
+
+class _VisualizationpageState extends State<Visualizationpage> {
+  // final CarouselController _carouselCtrl = CarouselController(); // ✅ correct
+  CarouselSliderController buttonCarouselController =
+      CarouselSliderController();
+  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      text,
-      style: TextStyle(
-        fontSize: 18,
-        color: active ? const Color(0xffFFD300) : const Color(0xffE0E0E0),
-      ),
+    final images = widget.algoSlideshowImage ?? [];
+
+    Widget buildImage(String? image, int index) => Container(
+      margin: EdgeInsets.all(10),
+      child: (image != null && image.isNotEmpty)
+          ? Image.network(image, fit: BoxFit.contain)
+          : Center(
+              child: Text(
+                "No Visualization Available",
+                style: TextStyle(fontSize: 12, color: Color(0xff7D7D7D)),
+              ),
+            ),
+    );
+
+    return Column(
+      children: [
+        const SizedBox(height: 20),
+        CarouselSlider.builder(
+          itemCount: images.length,
+          carouselController: buttonCarouselController, // ✅ correct
+          options: CarouselOptions(
+            height: 400,
+            viewportFraction: 1,
+            onPageChanged: (index, reason) {
+              if (mounted) {
+                setState(() {
+                  _currentPage = index;
+                });
+              }
+            },
+          ),
+          itemBuilder: (context, index, realIndex) {
+            return buildImage(images[index], index);
+          },
+        ),
+        const SizedBox(height: 12),
+        AnimatedSmoothIndicator(
+          activeIndex: _currentPage,
+          count: images.length,
+          effect: WormEffect(
+            activeDotColor: Color(0xFFFFD300),
+            dotHeight: 12,
+            dotWidth: 12,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF1A1A1A),
+              ),
+              onPressed: () => buttonCarouselController.previousPage(),
+              child: Icon(
+                Icons.arrow_back_ios_new_rounded,
+                color: Color(0xffE0E0E0),
+              ),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Color(0xFF1A1A1A),
+              ),
+              onPressed: () => buttonCarouselController.nextPage(),
+              child: Icon(
+                Icons.arrow_forward_ios_rounded,
+                color: Color(0xffE0E0E0),
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }
