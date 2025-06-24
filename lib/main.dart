@@ -1,4 +1,5 @@
 import 'package:algosapp/components/loadingCircle.dart';
+import 'package:algosapp/components/splashScreen.dart';
 import 'package:algosapp/navigators/AdminBottomNav.dart';
 import 'package:algosapp/navigators/BottomNav.dart';
 import 'package:algosapp/pages/HomePage.dart';
@@ -37,7 +38,8 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData().copyWith(
       //   textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
       // ),
-      home: AdminBottomNav(),
+      // home: AdminBottomNav(),
+      home: SplashScreen(),
       // home: AddAlgoShimmer(),
       // home: AlgoViewPage(id: 'bubble_sort'),
     );

@@ -41,7 +41,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_dotenv: ^5.2.1
-  flutter_native_splash: ^2.4.6
+  flutter_spinkit: ^5.2.1
   flutter_svg: ^2.1.0
   font_awesome_flutter: ^10.8.0
   google_fonts: ^6.2.1
@@ -99,15 +99,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-
-# flutter_native_splash:
-#   android: true
-#   ios: true
-#   color: "#363636" # same dark gray as your background
-#   image: assets/images/algorithm_logo.png # Replace with your logo path
-#   branding: assets/images/branding.png # Optional: small branding logo
-#   android_12:
-#     color: "#363636"
-#     image: assets/images/algorithm_logo.png
-#     branding: assets/images/branding.png
-#   web: false # If you're not targeting web

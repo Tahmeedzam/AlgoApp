@@ -1,5 +1,6 @@
 import 'package:algosapp/components/bigCard.dart';
 import 'package:algosapp/components/smallCard.dart';
+import 'package:algosapp/components/splashScreen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -16,6 +17,7 @@ class _HomePageState extends State<HomePage> {
   final Map<String, Color> _colorByName = {}; // name → Color
   final Map<String, String> _catNames = {}; // id   → name
   bool _catsLoaded = false;
+  bool _pageLoaded = false;
   late String id;
 
   /* ─── search state ────────────────────────────────────────────── */
@@ -25,7 +27,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _loadCategoryMeta();
+    _pageLoaded ? SplashScreen() : _loadCategoryMeta();
   }
 
   @override
