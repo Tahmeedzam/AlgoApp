@@ -1,3 +1,4 @@
+import 'package:algosapp/pages/codePage.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -127,11 +128,18 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
                       child: TabBarView(
                         physics: BouncingScrollPhysics(),
                         children: [
-                          descPage(algoDescription: algoDescription),
+                          descPage(
+                            algoDescription: algoDescription,
+                            mainImage: algoMainImage,
+                          ),
                           Visualizationpage(
                             algoSlideshowImage: algoSlideshowImage,
                           ),
-                          Container(child: Center(child: Text("Page"))),
+                          codePage(
+                            cppCode: algoCppCode,
+                            javaCode: algoJavaCode,
+                            pythonCode: algoPythonCode,
+                          ),
                           // Container(child: Center(child: Text("Page"))),
                         ],
                       ),
@@ -146,7 +154,12 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
 
 class descPage extends StatelessWidget {
   final String? algoDescription;
-  const descPage({Key? key, required this.algoDescription}) : super(key: key);
+  final String? mainImage;
+  const descPage({
+    Key? key,
+    required this.algoDescription,
+    required this.mainImage,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +188,7 @@ class descPage extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20),
                     child: Image.network(
-                      'https://res.cloudinary.com/daozctcil/image/upload/v1750173258/cpy0ffz4kj5aku7trr7w.jpg',
+                      mainImage as String,
                       width: double.infinity,
                       fit: BoxFit.cover,
                     ),
@@ -230,17 +243,24 @@ class _VisualizationpageState extends State<Visualizationpage> {
   Widget build(BuildContext context) {
     final images = widget.algoSlideshowImage ?? [];
 
-    Widget buildImage(String? image, int index) => Container(
-      margin: EdgeInsets.all(10),
-      child: (image != null && image.isNotEmpty)
-          ? Image.network(image, fit: BoxFit.contain)
-          : Center(
-              child: Text(
-                "No Visualization Available",
-                style: TextStyle(fontSize: 12, color: Color(0xff7D7D7D)),
-              ),
-            ),
-    );
+    Widget buildImage(String? slideShow, int index) {
+      if (slideShow == null || slideShow.isEmpty) {
+        return const Center(child: Text("No image"));
+      }
+
+      return Container(
+        margin: const EdgeInsets.symmetric(horizontal: 12),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Image.network(
+            slideShow,
+            fit: BoxFit.contain,
+            errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.broken_image),
+          ),
+        ),
+      );
+    }
 
     return Column(
       children: [
