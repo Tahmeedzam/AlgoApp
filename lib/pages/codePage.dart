@@ -131,12 +131,69 @@ class javaPage extends StatelessWidget {
                 child: HighlightView(
                   javaCode as String,
                   language: 'java',
-                  theme: tomorrowNightTheme,
+                  theme: monokaiSublimeTheme,
                   textStyle: TextStyle(
-                    fontFamily: 'Poppins',
-                    fontSize: 14,
                     color: Colors.white,
+                    fontFamily: 'NatoSans',
+                    letterSpacing: 1,
                   ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class pythonPage extends StatelessWidget {
+  final String? pythonCode;
+  const pythonPage({super.key, required this.pythonCode});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xFF1A1A1A),
+                ),
+                icon: Icon(Icons.copy, color: Color(0xffFFD300)),
+                label: Text(
+                  "Copy Code",
+                  style: TextStyle(color: Color(0xff7D7D7D)),
+                ),
+                onPressed: () {
+                  Clipboard.setData(ClipboardData(text: pythonCode as String));
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    CustomSnackBar(
+                      message: 'Code copied!',
+                      bgColor: Color(0xFF1A1A1A),
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+          Expanded(
+            // ← bounds the SingleChildScrollView
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: HighlightView(
+                pythonCode as String,
+                language: 'python',
+                theme: monokaiSublimeTheme,
+                textStyle: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'NatoSans',
+                  letterSpacing: 1,
                 ),
               ),
             ),
@@ -189,61 +246,12 @@ class cppPage extends StatelessWidget {
               child: HighlightView(
                 cppCode as String,
                 language: 'cpp',
-                theme: tomorrowNightTheme,
-                textStyle: TextStyle(fontSize: 14),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class pythonPage extends StatelessWidget {
-  final String? pythonCode;
-  const pythonPage({super.key, required this.pythonCode});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20)),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton.icon(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xFF1A1A1A),
+                theme: monokaiSublimeTheme,
+                textStyle: TextStyle(
+                  fontSize: 14,
+                  fontFamily: 'NatoSans',
+                  letterSpacing: 1,
                 ),
-                icon: Icon(Icons.copy, color: Color(0xffFFD300)),
-                label: Text(
-                  "Copy Code",
-                  style: TextStyle(color: Color(0xff7D7D7D)),
-                ),
-                onPressed: () {
-                  Clipboard.setData(ClipboardData(text: pythonCode as String));
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    CustomSnackBar(
-                      message: 'Code copied!',
-                      bgColor: Color(0xFF1A1A1A),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-          Expanded(
-            // ← bounds the SingleChildScrollView
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: HighlightView(
-                pythonCode as String,
-                language: 'python',
-                theme: tomorrowNightTheme,
-                textStyle: TextStyle(fontSize: 14),
               ),
             ),
           ),
