@@ -1,5 +1,6 @@
 import 'package:algosapp/components/loadingCircle.dart';
 import 'package:algosapp/components/splashScreen.dart';
+import 'package:algosapp/pushAlgoToFirebase/pushAllAlgo.dart';
 import 'package:algosapp/navigators/AdminBottomNav.dart';
 import 'package:algosapp/navigators/BottomNav.dart';
 import 'package:algosapp/pages/HomePage.dart';
@@ -40,6 +41,7 @@ class MyApp extends StatelessWidget {
       // ),
       // home: AdminBottomNav(),
       home: SplashScreen(),
+      // home: pushAllAlgo(),
       // home: AddAlgoShimmer(),
       // home: AlgoViewPage(id: 'bubble_sort'),
     );

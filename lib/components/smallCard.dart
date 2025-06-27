@@ -48,6 +48,7 @@ class _smallCardState extends State<smallCard> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
+                    overflow: TextOverflow.ellipsis,
                     widget.CardName,
                     style: TextStyle(
                       fontSize: 22,
