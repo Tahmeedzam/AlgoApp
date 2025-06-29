@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 Future<void> pushFirstAlgo() async {
   try {
     final String jsonString = await rootBundle.loadString(
-      'assets/json/all_algorithms_full.json',
+      'assets/json/all_algorithms_full_UPDATED_ALL.json',
     );
     final List<dynamic> jsonData = jsonDecode(jsonString);
 

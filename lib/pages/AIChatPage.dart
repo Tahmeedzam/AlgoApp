@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:markdown_widget/config/all.dart';
 import 'dart:convert';
+import 'package:markdown_widget/config/configs.dart';
+import 'package:markdown_widget/widget/all.dart';
+import 'package:markdown_widget/widget/markdown_block.dart';
 
 class AIChatPage extends StatefulWidget {
   const AIChatPage({super.key});
@@ -60,7 +64,7 @@ class _AIChatPageState extends State<AIChatPage> {
       chatHistory.add({
         "role": "user",
         "parts": [
-          {"text": text},
+          {"text": text.trim()},
         ],
       });
 
@@ -126,77 +130,110 @@ class _AIChatPageState extends State<AIChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Algorithm AI Chatbot'),
-        backgroundColor: Colors.blueAccent,
-        foregroundColor: Colors.white,
-      ),
-      body: Column(
-        children: <Widget>[
-          // Expanded widget to ensure the chat messages take up available space.
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8.0),
-              // Reverse the list to show the latest messages at the bottom.
-              reverse: true,
-              itemCount: _messages.length,
-              itemBuilder: (context, index) {
-                // Display messages in reverse order.
-                final message = _messages[_messages.length - 1 - index];
-                return MessageBubble(
-                  message: message.text,
-                  isUser: message.isUser,
-                );
-              },
-            ),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Color(0xff0D0D0D),
+        appBar: AppBar(
+          title: const Text(
+            'AlgoBot',
+            style: TextStyle(fontFamily: 'Poppins', color: Color(0xffE0E0E0)),
           ),
-          // Show a loading indicator when an API call is in progress.
-          if (_isLoading)
-            const Padding(
-              padding: EdgeInsets.symmetric(vertical: 8.0),
-              child: LinearProgressIndicator(color: Colors.blueAccent),
-            ),
-          // Input area for the user to type messages.
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Row(
-              children: <Widget>[
-                // Text input field.
-                Expanded(
-                  child: TextField(
-                    controller: _textController,
-                    decoration: InputDecoration(
-                      hintText: 'Ask about an algorithm...',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      filled: true,
-                      fillColor: Colors.grey[200],
-                      contentPadding: const EdgeInsets.symmetric(
-                        horizontal: 16.0,
-                        vertical: 12.0,
+          backgroundColor: Color(0xff1A1A1A),
+          foregroundColor: Colors.white,
+        ),
+        body: Column(
+          children: <Widget>[
+            // Expanded widget to ensure the chat messages take up available space.
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 12.0,
+                vertical: 4.0,
+              ),
+              child: Row(
+                children: [
+                  const Icon(Icons.info_outline, color: Colors.amber, size: 18),
+                  const SizedBox(width: 6),
+                  Expanded(
+                    child: Text(
+                      'Note: Chats are not saved and will be lost when you leave this screen.',
+                      style: TextStyle(
+                        color: Colors.grey[400],
+                        fontSize: 13.0,
+                        fontStyle: FontStyle.italic,
                       ),
                     ),
-                    onSubmitted: (_) =>
-                        _sendMessage(), // Send message on pressing enter
                   ),
-                ),
-                const SizedBox(width: 8.0),
-                // Send button.
-                FloatingActionButton(
-                  onPressed: _sendMessage,
-                  backgroundColor: Colors.blueAccent,
-                  foregroundColor: Colors.white,
-                  mini: true, // Make the button smaller
-                  elevation: 0, // No shadow for a cleaner look
-                  child: const Icon(Icons.send),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8.0),
+                // Reverse the list to show the latest messages at the bottom.
+                reverse: true,
+                itemCount: _messages.length,
+                itemBuilder: (context, index) {
+                  // Display messages in reverse order.
+                  final message = _messages[_messages.length - 1 - index];
+                  return MessageBubble(
+                    message: message.text,
+                    isUser: message.isUser,
+                  );
+                },
+              ),
+            ),
+            // Show a loading indicator when an API call is in progress.
+            if (_isLoading)
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 8.0),
+                child: LinearProgressIndicator(color: Color(0xffFFD300)),
+              ),
+            // Input area for the user to type messages.
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: <Widget>[
+                  // Text input field.
+                  Expanded(
+                    child: TextField(
+                      style: TextStyle(color: Colors.grey[800]),
+                      controller: _textController,
+                      decoration: InputDecoration(
+                        hintText: 'Ask about an algorithm...',
+                        hintStyle: TextStyle(color: Colors.grey[600]),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide.none,
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[200],
+                        contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 16.0,
+                          vertical: 12.0,
+                        ),
+                      ),
+                      onSubmitted: (_) =>
+                          _sendMessage(), // Send message on pressing enter
+                    ),
+                  ),
+                  const SizedBox(width: 8.0),
+                  // Send button.
+                  FloatingActionButton(
+                    onPressed: _sendMessage,
+                    backgroundColor: Color(0xffFFD300),
+                    foregroundColor: Colors.white,
+                    mini: true, // Make the button smaller
+                    elevation: 0, // No shadow for a cleaner look
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: const Icon(Icons.send),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -226,7 +263,7 @@ class MessageBubble extends StatelessWidget {
         margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
         decoration: BoxDecoration(
-          color: isUser ? Colors.blueAccent : Colors.grey[300],
+          color: isUser ? Color.fromARGB(255, 233, 194, 0) : Color(0xff1A1A1A),
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(isUser ? 15.0 : 0.0),
             topRight: Radius.circular(isUser ? 0.0 : 15.0),
@@ -241,13 +278,7 @@ class MessageBubble extends StatelessWidget {
             ),
           ],
         ),
-        child: Text(
-          message,
-          style: TextStyle(
-            color: isUser ? Colors.white : Colors.black87,
-            fontSize: 15.0,
-          ),
-        ),
+        child: MarkdownBlock(data: message, selectable: true),
       ),
     );
   }
