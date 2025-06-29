@@ -5,6 +5,7 @@ import 'dart:convert';
 import 'package:markdown_widget/config/configs.dart';
 import 'package:markdown_widget/widget/all.dart';
 import 'package:markdown_widget/widget/markdown_block.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart'; // Import flutter_dotenv
 
 class AIChatPage extends StatefulWidget {
   const AIChatPage({super.key});
@@ -20,9 +21,8 @@ class _AIChatPageState extends State<AIChatPage> {
   final List<ChatMessage> _messages = [];
   // Flag to indicate if an API call is currently in progress.
   bool _isLoading = false;
-
-  final String _geminiApiKey =
-      'AIzaSyBjvUiA2dqsAfVyLGBzCtrJyxFCLVlf09k'; // Leave this empty for Canvas environment
+  // Load the API key from .env file
+  final String _geminiApiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
 
   // Base URL for the Gemini API.
   static const String _geminiApiUrl =
@@ -38,8 +38,9 @@ class _AIChatPageState extends State<AIChatPage> {
   /// Sends the user's message to the Gemini API and updates the chat UI.
   Future<void> _sendMessage() async {
     final text = _textController.text.trim();
+    // Do not send empty messages
     if (text.isEmpty) {
-      return; // Do not send empty messages
+      return;
     }
 
     // Add user message to the chat list immediately
