@@ -1,14 +1,6 @@
-import 'package:algosapp/components/loadingCircle.dart';
 import 'package:algosapp/components/splashScreen.dart';
-import 'package:algosapp/pushAlgoToFirebase/pushAllAlgo.dart';
 import 'package:algosapp/navigators/AdminBottomNav.dart';
-import 'package:algosapp/navigators/BottomNav.dart';
-import 'package:algosapp/pages/HomePage.dart';
-import 'package:algosapp/pages/admin/AddAlgoPage.dart';
-import 'package:algosapp/pages/admin/AddAlgoPage2.dart';
-import 'package:algosapp/pages/algoViewPage.dart';
-import 'package:algosapp/pages/shimmerPages/AddAlgoShimmer.dart';
-import 'package:algosapp/services/cloudinaryService.dart';
+import 'package:algosapp/pushAlgoToFirebase/pushAllAlgo.dart';
 import 'package:algosapp/theme/theme.dart';
 import 'package:dotenv/dotenv.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -39,11 +31,8 @@ class MyApp extends StatelessWidget {
       // theme: ThemeData().copyWith(
       //   textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme),
       // ),
-      // home: AdminBottomNav(),
       home: SplashScreen(),
       // home: pushAllAlgo(),
-      // home: AddAlgoShimmer(),
-      // home: AlgoViewPage(id: 'bubble_sort'),
     );
   }
 }

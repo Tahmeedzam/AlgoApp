@@ -13,7 +13,7 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [HomePage(), AIChatPage(), ProfilePage()];
+  final List<Widget> _pages = [HomePage(), AIChatPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -21,24 +21,24 @@ class _BottomNavState extends State<BottomNav> {
       backgroundColor: Color.fromARGB(255, 0, 0, 0),
       body: _pages[_selectedIndex],
       bottomNavigationBar: Container(
-        color: Color.fromARGB(255, 37, 37, 37),
+        color: const Color.fromARGB(255, 37, 37, 37),
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         child: SafeArea(
           child: GNav(
-            gap: 8,
-            backgroundColor: Color.fromARGB(255, 37, 37, 37),
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            gap: 12, // spacing between icon and text
+            backgroundColor: const Color.fromARGB(255, 37, 37, 37),
             color: Colors.white,
-            activeColor: Color(0xffFFD300),
-            tabBackgroundColor: Color(0xff2A2A2A),
-            padding: const EdgeInsets.all(12),
+            activeColor: const Color(0xffFFD300),
+            tabBackgroundColor: const Color(0xff2A2A2A),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
             selectedIndex: _selectedIndex,
             onTabChange: (index) {
               setState(() => _selectedIndex = index);
             },
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
-              GButton(icon: Icons.chat, text: 'AI'),
-              GButton(icon: Icons.person, text: 'Profile'),
+              GButton(icon: Icons.chat, text: 'Algo AI'),
             ],
           ),
         ),

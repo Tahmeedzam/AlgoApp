@@ -1,4 +1,5 @@
 import 'package:algosapp/navigators/AdminBottomNav.dart';
+import 'package:algosapp/navigators/BottomNav.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -18,7 +19,7 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(milliseconds: 2000), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (_) => AdminBottomNav()), // or your page
+        MaterialPageRoute(builder: (_) => BottomNav()), // or your page
       );
     });
   }

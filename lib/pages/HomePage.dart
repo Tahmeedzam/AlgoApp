@@ -62,7 +62,7 @@ class _HomePageState extends State<HomePage> {
         elevation: 0,
         title: const Center(
           child: Text(
-            'Algo-Verse',
+            'Algo-Vault',
             style: TextStyle(
               fontFamily: 'Poppins',
               fontSize: 18,
@@ -81,21 +81,6 @@ class _HomePageState extends State<HomePage> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  SizedBox(
-                    height: 200,
-                    child: ListView(
-                      physics: const BouncingScrollPhysics(),
-                      scrollDirection: Axis.horizontal,
-                      children: const [
-                        bigCard(),
-                        SizedBox(width: 8),
-                        bigCard(),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-
-                  // 🔍 Search bar
                   Row(
                     children: [
                       Expanded(
@@ -119,7 +104,7 @@ class _HomePageState extends State<HomePage> {
                               padding: const EdgeInsets.all(15.0),
                               child: Image.asset(
                                 'assets/icons/search.png',
-                                color: const Color(0xffFFD300),
+                                color: const Color.fromARGB(255, 255, 211, 0),
                                 height: 10,
                                 width: 10,
                               ),
@@ -128,19 +113,6 @@ class _HomePageState extends State<HomePage> {
                               borderRadius: BorderRadius.circular(10),
                               borderSide: BorderSide.none,
                             ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      GestureDetector(
-                        onTap: () {},
-                        child: Container(
-                          padding: const EdgeInsets.all(10),
-                          child: Image.asset(
-                            'assets/icons/filter.png',
-                            color: const Color(0xffFFD300),
-                            height: 20,
-                            width: 20,
                           ),
                         ),
                       ),
@@ -164,7 +136,7 @@ class _HomePageState extends State<HomePage> {
                   : StreamBuilder<QuerySnapshot>(
                       stream: FirebaseFirestore.instance
                           .collection('algorithms')
-                          // .orderBy('times_viewed', descending: true)
+                          .orderBy('times_viewed', descending: true)
                           .snapshots(),
                       builder: (context, snap) {
                         if (!snap.hasData) {

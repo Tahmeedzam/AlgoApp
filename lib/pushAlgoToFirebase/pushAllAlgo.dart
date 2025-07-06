@@ -4,34 +4,41 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-Future<void> pushFirstAlgo() async {
+Future<void> pushAllAlgos() async {
   try {
     final String jsonString = await rootBundle.loadString(
       'assets/json/all_algorithms_full_UPDATED_ALL.json',
     );
     final List<dynamic> jsonData = jsonDecode(jsonString);
 
-    if (jsonData.isNotEmpty && jsonData.first is Map<String, dynamic>) {
-      Map<String, dynamic> firstAlgo = jsonData.first;
-      final String? algoId = firstAlgo['id'];
-
-      if (algoId == null || algoId.isEmpty) {
-        print('Error: ID field is missing or empty');
-        return;
-      }
-
-      // Push to Firestore collection 'algorithms'
-      await FirebaseFirestore.instance
-          .collection('algorithms')
-          .doc(algoId)
-          .set(firstAlgo);
-
-      print("Algorithm with ID '$algoId' pushed successfully.");
-    } else {
-      print("JSON is empty or not in expected format.");
+    if (jsonData.isEmpty) {
+      print("JSON is empty.");
+      return;
     }
+
+    for (var algo in jsonData) {
+      if (algo is Map<String, dynamic>) {
+        final String? algoId = algo['id'];
+
+        if (algoId == null || algoId.isEmpty) {
+          print('Skipping: Missing or empty ID.');
+          continue;
+        }
+
+        await FirebaseFirestore.instance
+            .collection('algorithms')
+            .doc(algoId)
+            .set(algo);
+
+        print("✅ Pushed: $algoId");
+      } else {
+        print("Skipping: Not a valid JSON object.");
+      }
+    }
+
+    print("🎉 All algorithms pushed successfully.");
   } catch (e) {
-    print("Failed to push algorithm: $e");
+    print("❌ Failed to push algorithms: $e");
   }
 }
 
@@ -48,7 +55,7 @@ class _pushAllAlgoState extends State<pushAllAlgo> {
     return const Scaffold(
       body: Center(
         child: ElevatedButton(
-          onPressed: pushFirstAlgo,
+          onPressed: pushAllAlgos,
           child: Row(
             children: [Text("Upload All"), Icon(Icons.arrow_upward_rounded)],
           ),

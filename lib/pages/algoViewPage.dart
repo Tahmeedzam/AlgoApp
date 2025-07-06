@@ -30,6 +30,17 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
     _id = widget.id; // ✅ now works
     _docRef = FirebaseFirestore.instance.collection('algorithms').doc(_id); // ✅
     fetchData();
+    getTimeViewed();
+  }
+
+  Future<void> getTimeViewed() async {
+    final docSnapshot = await _docRef.get();
+    if (docSnapshot.exists) {
+      final data = docSnapshot.data();
+      await _docRef.update({'times_viewed': FieldValue.increment(1)});
+    } else {
+      print('Document does not exist');
+    }
   }
 
   Future<void> fetchData() async {
@@ -245,7 +256,7 @@ class _VisualizationpageState extends State<Visualizationpage> {
 
     Widget buildImage(String? slideShow, int index) {
       if (slideShow == null || slideShow.isEmpty) {
-        return const Center(child: Text("No image"));
+        return const Center(child: Text("Slideshow not available"));
       }
 
       return Container(
@@ -265,60 +276,75 @@ class _VisualizationpageState extends State<Visualizationpage> {
     return Column(
       children: [
         const SizedBox(height: 20),
-        CarouselSlider.builder(
-          itemCount: images.length,
-          carouselController: buttonCarouselController, // ✅ correct
-          options: CarouselOptions(
-            height: 400,
-            viewportFraction: 1,
-            onPageChanged: (index, reason) {
-              if (mounted) {
-                setState(() {
-                  _currentPage = index;
-                });
-              }
-            },
-          ),
-          itemBuilder: (context, index, realIndex) {
-            return buildImage(images[index], index);
-          },
-        ),
-        const SizedBox(height: 12),
-        AnimatedSmoothIndicator(
-          activeIndex: _currentPage,
-          count: images.length,
-          effect: WormEffect(
-            activeDotColor: Color(0xFFFFD300),
-            dotHeight: 12,
-            dotWidth: 12,
-          ),
-        ),
-        const SizedBox(height: 12),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
-          children: [
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF1A1A1A),
+        images.isEmpty
+            ? const Center(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 60),
+                  child: Text(
+                    'Slideshow not available',
+                    style: TextStyle(color: Colors.grey, fontSize: 16),
+                  ),
+                ),
+              )
+            : Column(
+                children: [
+                  CarouselSlider.builder(
+                    itemCount: images.length,
+                    carouselController: buttonCarouselController,
+                    options: CarouselOptions(
+                      height: 400,
+                      viewportFraction: 1,
+                      onPageChanged: (index, reason) {
+                        if (mounted) {
+                          setState(() {
+                            _currentPage = index;
+                          });
+                        }
+                      },
+                    ),
+                    itemBuilder: (context, index, realIndex) {
+                      return buildImage(images[index], index);
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  AnimatedSmoothIndicator(
+                    activeIndex: _currentPage,
+                    count: images.length,
+                    effect: WormEffect(
+                      activeDotColor: Color(0xFFFFD300),
+                      dotHeight: 12,
+                      dotWidth: 12,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF1A1A1A),
+                        ),
+                        onPressed: () =>
+                            buttonCarouselController.previousPage(),
+                        child: const Icon(
+                          Icons.arrow_back_ios_new_rounded,
+                          color: Color(0xffE0E0E0),
+                        ),
+                      ),
+                      ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xFF1A1A1A),
+                        ),
+                        onPressed: () => buttonCarouselController.nextPage(),
+                        child: const Icon(
+                          Icons.arrow_forward_ios_rounded,
+                          color: Color(0xffE0E0E0),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              onPressed: () => buttonCarouselController.previousPage(),
-              child: Icon(
-                Icons.arrow_back_ios_new_rounded,
-                color: Color(0xffE0E0E0),
-              ),
-            ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xFF1A1A1A),
-              ),
-              onPressed: () => buttonCarouselController.nextPage(),
-              child: Icon(
-                Icons.arrow_forward_ios_rounded,
-                color: Color(0xffE0E0E0),
-              ),
-            ),
-          ],
-        ),
       ],
     );
   }

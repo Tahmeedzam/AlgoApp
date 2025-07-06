@@ -47,13 +47,16 @@ class _smallCardState extends State<smallCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
-                    overflow: TextOverflow.ellipsis,
-                    widget.CardName,
-                    style: TextStyle(
-                      fontSize: 22,
-                      color: Color(0xffE0E0E0),
-                      fontFamily: 'Poppins',
+                  SizedBox(
+                    width: 180,
+                    child: Text(
+                      overflow: TextOverflow.ellipsis,
+                      widget.CardName,
+                      style: TextStyle(
+                        fontSize: 22,
+                        color: Color(0xffE0E0E0),
+                        fontFamily: 'Poppins',
+                      ),
                     ),
                   ),
                   SizedBox(height: 5),
