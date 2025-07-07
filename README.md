@@ -20,7 +20,7 @@ AlgoApp is a Flutter application designed to help users learn, visualize, and pr
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/AlgoApp.git
+    git clone https://github.com/Tahmeedzam/AlgoApp.git
     ```
 2. Navigate to the project directory:
     ```bash
