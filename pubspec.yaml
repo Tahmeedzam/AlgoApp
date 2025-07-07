@@ -113,6 +113,8 @@ flutter_native_splash:
   color: "#1A1A1A"  # Your app's background color
   image: assets/images/splash_logo.png  # Your logo (recommended: 512x512 transparent PNG)
   branding: assets/images/splash_text.png  # (Optional) App name or tagline image
+  android_12:
+    icon_background_color: "#1A1A1A"
 
   android_gravity: center
   ios_content_mode: center
