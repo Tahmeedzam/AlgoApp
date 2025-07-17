@@ -257,7 +257,25 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // Align messages based on whether they are from the user or the AI.
+    // ✅ Define a dark config manually without copyWith
+    final darkMarkdownConfig = MarkdownConfig(
+      configs: [
+        PreConfig(
+          textStyle: const TextStyle(
+            color: Colors.white,
+            fontFamily: 'monospace',
+          ),
+          decoration: BoxDecoration(
+            color: const Color(0xFF2C2C2C), // Dark code block background
+            borderRadius: BorderRadius.circular(8),
+          ),
+        ),
+        PConfig(textStyle: const TextStyle(color: Colors.white, fontSize: 14)),
+        H1Config(style: const TextStyle(color: Colors.amber, fontSize: 20)),
+        H2Config(style: const TextStyle(color: Colors.orange, fontSize: 18)),
+      ],
+    );
+
     return Align(
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
@@ -279,7 +297,11 @@ class MessageBubble extends StatelessWidget {
             ),
           ],
         ),
-        child: MarkdownBlock(data: message, selectable: true),
+        child: MarkdownBlock(
+          data: message,
+          selectable: true,
+          config: darkMarkdownConfig, // 👈 use the correct config
+        ),
       ),
     );
   }
