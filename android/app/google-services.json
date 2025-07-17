@@ -1,10 +1,30 @@
 {
   "project_info": {
     "project_number": "580107850621",
+    "firebase_url": "https://algoapp-5f83b-default-rtdb.firebaseio.com",
     "project_id": "algoapp-5f83b",
     "storage_bucket": "algoapp-5f83b.firebasestorage.app"
   },
   "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:580107850621:android:e70b475539a5599953b214",
+        "android_client_info": {
+          "package_name": "com.algovault.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDKSnHPVCYfLLwANVr-rLhV3_t9AP12WUU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
     {
       "client_info": {
         "mobilesdk_app_id": "1:580107850621:android:f67ce6568aba54d153b214",

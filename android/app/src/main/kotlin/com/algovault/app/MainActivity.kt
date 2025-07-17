@@ -1,4 +1,4 @@
-package com.algovault.app
+package com.example.algosapp
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -103,32 +103,41 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
                       indicatorColor: Color(0xffFFD300),
                       tabs: [
                         Tab(
-                          child: Text(
-                            'Explaination',
-                            style: TextStyle(
-                              color: Color(0xff7D7D7D),
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              'Explaination',
+                              style: TextStyle(
+                                color: Color(0xff7D7D7D),
+                                fontFamily: 'Poppins',
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
                         Tab(
-                          child: Text(
-                            'Visualization',
-                            style: TextStyle(
-                              color: Color(0xff7D7D7D),
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              'Visualization',
+                              style: TextStyle(
+                                color: Color(0xff7D7D7D),
+                                fontFamily: 'Poppins',
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),
                         Tab(
-                          child: Text(
-                            'Code',
-                            style: TextStyle(
-                              color: Color(0xff7D7D7D),
-                              fontFamily: 'Poppins',
-                              fontSize: 16,
+                          child: FittedBox(
+                            fit: BoxFit.scaleDown,
+                            child: Text(
+                              'Code',
+                              style: TextStyle(
+                                color: Color(0xff7D7D7D),
+                                fontFamily: 'Poppins',
+                                fontSize: 16,
+                              ),
                             ),
                           ),
                         ),

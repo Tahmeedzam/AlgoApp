@@ -29,6 +29,7 @@ environment:
 # versions available, run `flutter pub outdated`.
 dependencies:
   animated_custom_dropdown: 3.1.1
+  bounce: ^1.0.2
   carousel_slider: ^5.1.1
   cloud_firestore: ^5.6.8
   cloudinary: ^1.2.0
@@ -38,6 +39,7 @@ dependencies:
   dotenv: ^4.2.0
   firebase_auth: ^5.5.4
   firebase_core: ^3.13.1
+  firebase_remote_config: ^4.3.5
   firebase_storage: ^12.4.6
   flutter:
     sdk: flutter
@@ -49,11 +51,13 @@ dependencies:
   flutter_svg: ^2.1.0
   font_awesome_flutter: ^10.8.0
   google_fonts: ^6.2.1
+  google_mobile_ads: ^6.0.0
   google_nav_bar: ^5.0.7
   http: ^1.4.0
   image_picker: ^1.1.2
   lottie: ^3.3.1
   markdown_widget: ^2.3.1
+  path_provider: ^2.1.5
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.2.1
 
@@ -76,11 +80,13 @@ flutter:
     - assets/json/
     - assets/images/
     - assets/images/splash_logo.png
+    - assets/images/appLogoSized.png
+    - assets/images/appLogoWhiteSized.jpg
     - assets/images/splash_text.png
     - assets/
     - assets/json/
     - assets/json/all_algorithms_full_UPDATED_ALL.json
-    - .env  
+    - .env
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
   # For details regarding adding assets from package dependencies, see
@@ -93,26 +99,23 @@ flutter:
   fonts:
     - family: Poppins
       fonts:
-        - asset: assets/fonts/Poppins-Medium.ttf          # weight 400
+        - asset: assets/fonts/Poppins-Medium.ttf # weight 400
         # - asset: assets/fonts/Poppins-Medium.ttf
         #   weight: 500
         # - asset: assets/fonts/Poppins-SemiBold.ttf
         #   weight: 600
         # - asset: assets/fonts/Poppins-Bold.ttf
         #   weight: 700
-  #         style: italic
+    #         style: italic
     - family: NatoSans
       fonts:
         - asset: assets/fonts/NotoSans-Medium.ttf
-  #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
-
-
 flutter_native_splash:
-  color: "#1A1A1A"  # Your app's background color
-  image: assets/images/splash_logo.png  # Your logo (recommended: 512x512 transparent PNG)
-  branding: assets/images/splash_text.png  # (Optional) App name or tagline image
+  color: "#1A1A1A" # Your app's background color
+  image: assets/images/appLogoSized.png # Your logo (recommended: 512x512 transparent PNG)
+  branding: assets/images/splash_text.png # (Optional) App name or tagline image
   android_12:
     icon_background_color: "#1A1A1A"
 
@@ -120,9 +123,8 @@ flutter_native_splash:
   ios_content_mode: center
   fullscreen: true
 
-
 flutter_launcher_icons:
   android: true
   ios: true
-  image_path: assets/images/splash_logo.png
+  image_path: assets/images/appLogoWhiteSized.jpg
   min_sdk_android: 21
