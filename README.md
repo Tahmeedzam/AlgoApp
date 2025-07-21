@@ -15,7 +15,6 @@
 - 📊 **Time & Space Complexity Analysis**
 - 🎥 **Media Integration**: Visual aids, GIFs, and YouTube links for better understanding
 - 🔎 **Search Functionality** to quickly find algorithms
-- 📂 **Offline Access** (Optional for cached content)
 - 🔐 Firebase-backed for content management and updates
 
 ---
