@@ -2,6 +2,7 @@ import 'package:algosapp/pages/AIChatPage.dart';
 import 'package:algosapp/pages/admin/AddAlgoPage.dart';
 import 'package:algosapp/pages/HomePage.dart';
 import 'package:algosapp/pages/ProfilePage.dart';
+import 'package:algosapp/pages/contactPage.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 
@@ -13,7 +14,7 @@ class BottomNav extends StatefulWidget {
 class _BottomNavState extends State<BottomNav> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [HomePage(), AIChatPage()];
+  final List<Widget> _pages = [HomePage(), AIChatPage(), ContactPage()];
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,7 @@ class _BottomNavState extends State<BottomNav> {
             tabs: const [
               GButton(icon: Icons.home, text: 'Home'),
               GButton(icon: Icons.chat, text: 'Algo AI'),
+              GButton(icon: Icons.info_rounded, text: 'Contact'),
             ],
           ),
         ),

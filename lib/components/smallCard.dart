@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:algosapp/components/loadingCircle.dart';
 import 'package:algosapp/services/ad_helper.dart';
 import 'package:bounce/bounce.dart';
 import 'package:algosapp/services/savedAlgoHelper.dart';
@@ -64,8 +65,14 @@ class _smallCardState extends State<smallCard> {
   Widget build(BuildContext context) {
     return Bounce(
       tilt: false,
-      onTap: () {
-        AdHelper.handleAlgoClickWithAd(() {
+      onTap: () async {
+        showDialog(
+          context: context,
+          barrierDismissible: false, // Prevent dismiss on tap outside
+          builder: (context) => LoadingCircle(),
+        );
+        await AdHelper.handleAlgoClickWithAd(() async {
+          Navigator.of(context).pop();
           Navigator.of(context).push(
             PageRouteBuilder(
               pageBuilder: (_, animation, __) =>
@@ -158,59 +165,46 @@ class _smallCardState extends State<smallCard> {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    // GestureDetector(
-                    //   onTap: () async {
-                    //     await saveAlgo(widget.CardId);
-                    //     setState(() {
-                    //       _bookmarked = true;
-                    //     });
-                    //   },
-                    //   child: Icon(
-                    //     _bookmarked ? Icons.bookmark : Icons.bookmark_outline,
-                    //     size: 20,
-                    //     color: Colors.white,
-                    //   ),
-                    // ),
                     GestureDetector(
-                      onTap: () {
-                        Navigator.of(context).push(
-                          PageRouteBuilder(
-                            pageBuilder: (_, animation, __) =>
-                                AlgoViewPage(id: widget.CardId),
-                            transitionsBuilder: (_, animation, __, child) {
-                              final offsetAnimation =
-                                  Tween<Offset>(
-                                    begin: const Offset(1.0, 0.0),
-                                    end: Offset.zero,
-                                  ).animate(
-                                    CurvedAnimation(
-                                      parent: animation,
-                                      curve: Curves.easeInOut,
-                                    ),
-                                  );
+                      // onTap: () {
+                      //   Navigator.of(context).push(
+                      //     PageRouteBuilder(
+                      //       pageBuilder: (_, animation, __) =>
+                      //           AlgoViewPage(id: widget.CardId),
+                      //       transitionsBuilder: (_, animation, __, child) {
+                      //         final offsetAnimation =
+                      //             Tween<Offset>(
+                      //               begin: const Offset(1.0, 0.0),
+                      //               end: Offset.zero,
+                      //             ).animate(
+                      //               CurvedAnimation(
+                      //                 parent: animation,
+                      //                 curve: Curves.easeInOut,
+                      //               ),
+                      //             );
 
-                              final fadeAnimation =
-                                  Tween<double>(begin: 0.0, end: 1.0).animate(
-                                    CurvedAnimation(
-                                      parent: animation,
-                                      curve: Curves.easeInOut,
-                                    ),
-                                  );
+                      //         final fadeAnimation =
+                      //             Tween<double>(begin: 0.0, end: 1.0).animate(
+                      //               CurvedAnimation(
+                      //                 parent: animation,
+                      //                 curve: Curves.easeInOut,
+                      //               ),
+                      //             );
 
-                              return SlideTransition(
-                                position: offsetAnimation,
-                                child: FadeTransition(
-                                  opacity: fadeAnimation,
-                                  child: child,
-                                ),
-                              );
-                            },
-                            transitionDuration: const Duration(
-                              milliseconds: 400,
-                            ),
-                          ),
-                        );
-                      },
+                      //         return SlideTransition(
+                      //           position: offsetAnimation,
+                      //           child: FadeTransition(
+                      //             opacity: fadeAnimation,
+                      //             child: child,
+                      //           ),
+                      //         );
+                      //       },
+                      //       transitionDuration: const Duration(
+                      //         milliseconds: 400,
+                      //       ),
+                      //     ),
+                      //   );
+                      // },
                       child: Container(
                         decoration: BoxDecoration(
                           color: const Color(0xff0D0D0D),

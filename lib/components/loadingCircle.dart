@@ -39,7 +39,7 @@ class _LoadingCircleState extends State<LoadingCircle>
             Center(child: CircularProgressIndicator()),
             SizedBox(height: 20),
             Text(
-              'Uploading data',
+              'Loading data',
               style: TextStyle(fontSize: 16, color: Color(0xff7D7D7D)),
             ),
           ],

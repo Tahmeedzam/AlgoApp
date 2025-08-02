@@ -59,6 +59,7 @@ dependencies:
   path_provider: ^2.1.5
   shimmer: ^3.0.0
   smooth_page_indicator: ^1.2.1
+  url_launcher: ^6.3.2
 
 dev_dependencies:
   flutter_lints: ^5.0.0
@@ -82,6 +83,7 @@ flutter:
     - assets/images/appLogoSized.png
     - assets/images/appLogoWhiteSized.jpg
     - assets/images/splash_text.png
+    - assets/images/linkedinlogo.png
     - assets/
     - assets/json/
     - assets/json/all_algorithms_full_UPDATED_ALL.json
