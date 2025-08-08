@@ -49,7 +49,7 @@ class ContactPage extends StatelessWidget {
                       Icon(Icons.person, color: Colors.amber),
                       SizedBox(width: 5),
                       SelectableText(
-                        "Tahmeed Zamidnar",
+                        "Tahmeed Zamindar",
                         style: TextStyle(
                           fontFamily: 'Poppins',
                           fontSize: 18,
@@ -65,8 +65,9 @@ class ContactPage extends StatelessWidget {
                         child: Text(
                           "LinkedIn",
                           style: TextStyle(
+                            decoration: TextDecoration.underline,
                             fontFamily: 'Poppins',
-                            fontSize: 14,
+                            fontSize: 12,
                             color: Color(0xffE0E0E0),
                           ),
                         ),
@@ -100,8 +101,9 @@ class ContactPage extends StatelessWidget {
                         child: Text(
                           "LinkedIn",
                           style: TextStyle(
+                            decoration: TextDecoration.underline,
                             fontFamily: 'Poppins',
-                            fontSize: 14,
+                            fontSize: 12,
                             color: Color(0xffE0E0E0),
                           ),
                         ),
@@ -136,7 +138,8 @@ class ContactPage extends StatelessWidget {
                           "LinkedIn",
                           style: TextStyle(
                             fontFamily: 'Poppins',
-                            fontSize: 14,
+                            decoration: TextDecoration.underline,
+                            fontSize: 12,
                             color: Color(0xffE0E0E0),
                           ),
                         ),
@@ -177,6 +180,32 @@ class ContactPage extends StatelessWidget {
                       fontSize: 18,
                       color: Color(0xffE0E0E0),
                     ),
+                  ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20, top: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Icon(Icons.rate_review_rounded),
+                  SizedBox(width: 5),
+                  InkWell(
+                    child: Text(
+                      ": Write a review",
+                      style: TextStyle(
+                        decoration: TextDecoration.underline,
+                        fontFamily: 'Poppins',
+                        fontSize: 18,
+                        color: Color(0xffE0E0E0),
+                      ),
+                    ),
+                    onTap: () {
+                      launchUrlString(
+                        'https://play.google.com/store/apps/details?id=com.algovault.app',
+                      );
+                    },
                   ),
                 ],
               ),
