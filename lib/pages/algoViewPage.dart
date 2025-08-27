@@ -2,6 +2,7 @@ import 'package:algosapp/pages/codePage.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class AlgoViewPage extends StatefulWidget {
@@ -70,6 +71,34 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
     }
   }
 
+  Future<void> shareAlgorithm({
+    required BuildContext context,
+    required String algoId,
+    String? algoName,
+  }) async {
+    final link = 'https://algovault.netlify.app/$algoId';
+
+    // Compute the origin rect for the share sheet (useful for iPad).
+    final RenderBox? box = context.findRenderObject() as RenderBox?;
+    final Rect shareOrigin = box != null
+        ? (box.localToGlobal(Offset.zero) & box.size)
+        : const Rect.fromLTWH(0, 0, 1, 1);
+
+    final params = ShareParams(
+      text: 'Check out "${algoName ?? 'this algorithm'}" on AlgoVault: $link',
+      subject: 'AlgoVault: ${algoName ?? ''}',
+      sharePositionOrigin: shareOrigin,
+    );
+
+    try {
+      // Use the instance API (non-deprecated)
+      await SharePlus.instance.share(params);
+    } catch (e) {
+      // handle or log errors
+      debugPrint('Share failed: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return dataFetched == (false)
@@ -94,6 +123,16 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
                       Navigator.pop(context);
                     },
                   ),
+                  actions: [
+                    IconButton(
+                      onPressed: () => shareAlgorithm(
+                        algoId: _id,
+                        algoName: algoName,
+                        context: context,
+                      ),
+                      icon: Icon(Icons.share, color: Colors.grey.shade700),
+                    ),
+                  ],
                 ),
                 backgroundColor: const Color(0xff0D0D0D),
                 body: Column(

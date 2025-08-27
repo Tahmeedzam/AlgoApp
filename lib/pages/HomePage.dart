@@ -152,6 +152,11 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 prefixIcon: Padding(
                                   padding: const EdgeInsets.all(15.0),
+                                  // child: Icon(
+                                  //   size: 15,
+                                  //   Icons.search,
+                                  //   color: Colors.grey.shade600,
+                                  // ),
                                   child: Image.asset(
                                     'assets/icons/search.png',
                                     color: const Color.fromARGB(
