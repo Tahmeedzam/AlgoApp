@@ -14,6 +14,40 @@ class AdHelper {
     }
   }
 
+  static BannerAd algoPageAd() {
+    return BannerAd(
+      adUnitId: dotenv.env['AlgoViewPage_UnitId'] ?? ' ', // from your dotenv
+      size: AdSize.fullBanner, // or AdSize.banner
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          print('✅ Banner Ad Loaded');
+        },
+        onAdFailedToLoad: (ad, error) {
+          print('❌ Banner Ad failed to load: ${error.message}');
+          ad.dispose();
+        },
+      ),
+    );
+  }
+
+  static BannerAd botPageAd() {
+    return BannerAd(
+      adUnitId: dotenv.env['BotPage_UnitId'] ?? ' ', // from your dotenv
+      size: AdSize.fullBanner, // or AdSize.banner
+      request: const AdRequest(),
+      listener: BannerAdListener(
+        onAdLoaded: (ad) {
+          print('✅ Banner Ad Loaded');
+        },
+        onAdFailedToLoad: (ad, error) {
+          print('❌ Banner Ad failed to load: ${error.message}');
+          ad.dispose();
+        },
+      ),
+    );
+  }
+
   static String get rewardedAdUnitId {
     if (Platform.isAndroid) {
       return dotenv.env['onCardClick_UnitId'] ?? ''; // fallback test ad

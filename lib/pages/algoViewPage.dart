@@ -1,7 +1,9 @@
 import 'package:algosapp/pages/codePage.dart';
+import 'package:algosapp/services/ad_helper.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -24,6 +26,9 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
   String? algoCppCode;
   String? algoPythonCode;
   bool dataFetched = false;
+  late BannerAd _bannerAd;
+  bool _isBannerAdReady = false;
+  BannerAd? _HomeScreenBannerAd;
 
   @override
   void initState() {
@@ -32,6 +37,14 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
     _docRef = FirebaseFirestore.instance.collection('algorithms').doc(_id); // ✅
     fetchData();
     getTimeViewed();
+    _HomeScreenBannerAd = AdHelper.algoPageAd();
+    _HomeScreenBannerAd!.load();
+  }
+
+  @override
+  void dispose() {
+    _HomeScreenBannerAd?.dispose();
+    super.dispose();
   }
 
   Future<void> getTimeViewed() async {
@@ -134,7 +147,15 @@ class _AlgoViewPageState extends State<AlgoViewPage> {
                     ),
                   ],
                 ),
+
                 backgroundColor: const Color(0xff0D0D0D),
+                bottomNavigationBar: _HomeScreenBannerAd != null
+                    ? SizedBox(
+                        width: _HomeScreenBannerAd!.size.width.toDouble(),
+                        height: _HomeScreenBannerAd!.size.height.toDouble(),
+                        child: AdWidget(ad: _HomeScreenBannerAd!),
+                      )
+                    : null,
                 body: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

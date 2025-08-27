@@ -1,4 +1,6 @@
+import 'package:algosapp/services/ad_helper.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:http/http.dart' as http;
 import 'package:markdown_widget/config/all.dart';
 import 'dart:convert';
@@ -23,15 +25,25 @@ class _AIChatPageState extends State<AIChatPage> {
   bool _isLoading = false;
   // Load the API key from .env file
   final String _geminiApiKey = dotenv.env['GEMINI_API_KEY'] ?? '';
+  BannerAd? _HomeScreenBannerAd;
 
   // Base URL for the Gemini API.
   static const String _geminiApiUrl =
       'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent';
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _HomeScreenBannerAd = AdHelper.botPageAd();
+    _HomeScreenBannerAd!.load();
+  }
+
+  @override
   void dispose() {
     _textController
         .dispose(); // Dispose of the controller when the widget is removed
+    _HomeScreenBannerAd?.dispose();
     super.dispose();
   }
 
@@ -167,6 +179,12 @@ class _AIChatPageState extends State<AIChatPage> {
                 ],
               ),
             ),
+            if (_HomeScreenBannerAd != null)
+              SizedBox(
+                width: _HomeScreenBannerAd!.size.width.toDouble(),
+                height: _HomeScreenBannerAd!.size.height.toDouble(),
+                child: AdWidget(ad: _HomeScreenBannerAd!),
+              ),
             Expanded(
               child: ListView.builder(
                 padding: const EdgeInsets.all(8.0),
