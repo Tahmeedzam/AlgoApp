@@ -275,22 +275,54 @@ class MessageBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ Define a dark config manually without copyWith
     final darkMarkdownConfig = MarkdownConfig(
       configs: [
         PreConfig(
           textStyle: const TextStyle(
-            color: Colors.white,
-            fontFamily: 'monospace',
+            color: Color(0xFFB3E5FC), // Light blue code text
+            fontFamily: 'FiraMono', // Use a monospace font
+            fontSize: 16,
           ),
           decoration: BoxDecoration(
-            color: const Color(0xFF2C2C2C), // Dark code block background
+            color: Color(0xFF10151A), // Much darker code block background
             borderRadius: BorderRadius.circular(8),
           ),
         ),
-        PConfig(textStyle: const TextStyle(color: Colors.white, fontSize: 14)),
-        H1Config(style: const TextStyle(color: Colors.amber, fontSize: 20)),
-        H2Config(style: const TextStyle(color: Colors.orange, fontSize: 18)),
+        CodeConfig(
+          style: const TextStyle(
+            color: Colors.yellowAccent, // Dark text for inline code
+            fontFamily: 'FiraMono', // Monospace font
+            fontSize: 15,
+          ),
+        ),
+        PConfig(
+          textStyle: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            height: 1.5,
+          ),
+        ),
+        H1Config(
+          style: const TextStyle(
+            color: Colors.amber,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        H2Config(
+          style: const TextStyle(
+            color: Colors.orangeAccent,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        H3Config(
+          style: const TextStyle(
+            color: Colors.orange,
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ],
     );
 
@@ -298,9 +330,11 @@ class MessageBubble extends StatelessWidget {
       alignment: isUser ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 8.0),
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+        padding: const EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
         decoration: BoxDecoration(
-          color: isUser ? Color.fromARGB(255, 233, 194, 0) : Color(0xff1A1A1A),
+          color: isUser
+              ? const Color.fromARGB(255, 84, 85, 3) // Soft blue for user
+              : const Color(0xff23272A), // Dark for bot
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(isUser ? 15.0 : 0.0),
             topRight: Radius.circular(isUser ? 0.0 : 15.0),
@@ -309,16 +343,16 @@ class MessageBubble extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.1),
-              blurRadius: 3,
-              offset: const Offset(0, 2),
+              color: Colors.black.withOpacity(0.08),
+              blurRadius: 2,
+              offset: const Offset(0, 1),
             ),
           ],
         ),
         child: MarkdownBlock(
           data: message,
           selectable: true,
-          config: darkMarkdownConfig, // 👈 use the correct config
+          config: darkMarkdownConfig,
         ),
       ),
     );
